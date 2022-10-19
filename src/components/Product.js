@@ -3,22 +3,31 @@ import { useState } from "react";
 
 import { StarIcon } from "@heroicons/react/solid";
 import Currency from "react-currency-formatter";
+import { useDispatch } from "react-redux";
+import { addToBasket } from "../slices/basketSlice";
 
 const MAX_RATING = 5;
 const MIN_RATING = 1;
 
 function Product({ id, title, price, description, category, image }) {
+  const dispacth = useDispatch();
+
   const [rating] = useState(
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
   );
 
   const [hasPrime] = useState(Math.random() < 0.5);
 
+  const addItemToBasket = () => {
+    const product = { id, title, rating, price, description, category, image, hasPrime };
+
+    // Sending the product as an action to be the REDUX store, basket slice
+    dispacth(addToBasket(product))
+  };
+
   return (
     <div className="relative flex flex-col m-5 bg-white z-30 p-10">
-      <p className="absolute top-2 right-2 italic text-gray-400">
-        {category}
-      </p>
+      <p className="absolute top-2 right-2 italic text-gray-400">{category}</p>
 
       <Image src={image} height={200} width={200} objectFit="contain" />
 
@@ -44,7 +53,11 @@ function Product({ id, title, price, description, category, image }) {
         </div>
       )}
 
-      <button className="mt-auto p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border-yellow-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 active:from-yellow-500"> Add to Basket </button>
+      <button
+        className="mt-auto p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border-yellow-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 active:from-yellow-500"
+        onClick={addItemToBasket}>
+        Add to Basket
+      </button>
     </div>
   );
 }
