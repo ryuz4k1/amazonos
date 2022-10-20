@@ -1,11 +1,15 @@
 import Header from "../components/Header";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { selectItems } from "../slices/basketSlice";
+import { selectItems, selectTotal } from "../slices/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
+import Currency from "react-currency-formatter";
+import { useSession } from "next-auth/react";
 
 function checkout() {
+  const { data: session } = useSession();
   const items = useSelector(selectItems);
+  const total = useSelector(selectTotal);
 
   return (
     <div className="bg-gray-100">
@@ -13,7 +17,7 @@ function checkout() {
 
       <main className="lg:flex max-w-screen-2xl mx-auto">
         {/* Left */}
-        <div className="flex-grow mt-5 shadow-sm">
+        <div className="flex-grow m-5 shadow-sm">
           <Image
             src="https://links.papareact.com/ikj"
             width={1020}
@@ -45,10 +49,24 @@ function checkout() {
         </div>
 
         {/* Right */}
-        <div>
+        <div className="flex flex-col bg-white p-10 shadow-md">
+          {items.length > 0 && (
+            <>
+              <h2 className="whitespace-nowrap">
+                Subtotal ({items.length} items):
+                <span className="font-bold">
+                  <Currency quantity={total} currency="GBP" />
+                </span>
+              </h2>
+
+              <button
+                disabled={!session}
+                className={`mt-2 ${!session ? "button-disabled" : "button"}`}>
+                {!session ? "Sign in to checkout" : "Proceed to checkout"}
+              </button>
+            </>
+          )}
         </div>
-
-
       </main>
     </div>
   );

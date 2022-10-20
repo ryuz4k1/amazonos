@@ -48,12 +48,13 @@ function CheckoutProduct({
             ))}
         </div>
 
-        <div className="text-xs my-2 line-clamp-2"> {description} </div>
+        <p className="text-xs my-2 line-clamp-2"> {description} </p>
         <Currency quantity={price} currency="GBP" />
 
         {hasPrime && (
           <div className="flex items-center space-x-2">
             <img
+              loading="lazy"
               className="w-12"
               src="https://links.papareact.com/fdw"
               alt=""
@@ -65,13 +66,13 @@ function CheckoutProduct({
       <div className="flex flex-col space-y-2 my-auto justify-self-end">
         <button
           onClick={addItemToBasket}
-          className="mt-auto p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border-yellow-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 active:from-yellow-500"
+          className="button"
         >
           Add to Basket
         </button>
         <button
           onClick={removeItemFromBasket}
-          className="mt-auto p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border-yellow-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 active:from-yellow-500"
+          className="button"
         >
           Remove to Basket
         </button>
