@@ -1,8 +1,8 @@
 import Head from "next/head";
-import Header from "../components/Header"
-import Banner from "../components/Banner"
-import ProductFeed from "../components/ProductFeed"
-import Footer from "../components/Footer"
+import Header from "../components/Header";
+import Banner from "../components/Banner";
+import ProductFeed from "../components/ProductFeed";
+import Footer from "../components/Footer";
 
 export default function Home({ products }) {
   return (
@@ -10,35 +10,28 @@ export default function Home({ products }) {
       <Head>
         <title>Amazonos</title>
       </Head>
-      
+
       {/* Header */}
       <Header></Header>
-      
 
-      <main className="mx-auto">
-
+      <main className="mx-auto min">
         {/* Banner */}
         <Banner />
 
-
-
         {/* Product Feed */}
-        <ProductFeed products={ products } />
-
-        {/* Footer */}
-        <Footer />
-
+        <ProductFeed products={products} />
       </main>
 
+      {/* Footer */}
+      {/* <Footer /> */}
     </div>
   );
 }
 
-
-
 export async function getServerSideProps(context) {
-  const products = await fetch("https://fakestoreapi.com/products").then((res) => res.json());
+  const products = await fetch("https://fakestoreapi.com/products").then(
+    (res) => res.json()
+  );
 
-  return { props: { products } } 
+  return { props: { products } };
 }
-
